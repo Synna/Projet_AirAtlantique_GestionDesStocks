@@ -2,21 +2,18 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'null',
-  database : 'gestiondesstocks'
+  password : '',
+  database : 'stocks'
 });
 
 var selectuser = function (login, password){
 	connection.connect();
-  var queryString = 'SELECT * from membres';
-	connection.query(queryString, function(err, rows, fields) {
-  if (!err)
-    console.log('The solution is: ', rows);
-  else
-    console.log('Error while performing Query.');
+  var queryString = 'SELECT id, login, password, access from user WHERE login = "'+ login + '"';    //je prépare ma requête
+	connection.query(queryString, function(err, rows, fields) {                                       //j’exécute ma requête
+  connection.end();
+    console.log(rows[0]);
+    callback(rows[0]);                          //je veux retourner la réponse avec tout les valeur pour faire  
+                                                //un traitement et des redirection en fonction de sont accès 
 });
-
-	connection.end();
 };
-
 exports.selectuser = selectuser;

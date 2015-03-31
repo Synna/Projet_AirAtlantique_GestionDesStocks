@@ -2,8 +2,9 @@ var reqmysql = require('./ressource/connection');
 var express = require('express');
 var session = require('cookie-session');
 var bodyParser = require('body-parser');
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var app = express();
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
 
 app.use(session({secret: 'todotopsecret'}));
 app.use(bodyParser.urlencoded({
@@ -18,8 +19,7 @@ app.get('/', function(req, res) {
 app.post('/connexion', function(req, res) {
 	var login = req.body.login;
 	var password = req.body.password;
-	reqmysql.selectuser();
-    res.render('admin.ejs');
+	reqmysql.selectuser(login, password);
 })
 
 .use(express.static(__dirname + '/css'))
