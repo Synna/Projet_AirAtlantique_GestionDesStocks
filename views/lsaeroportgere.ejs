@@ -1,0 +1,63 @@
+<html>
+<head>
+    <link href="index.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Connexion</title>
+</head>
+<body>
+            <a href="javascript:history.back()">
+        <div class="gomenu">
+        <h1>Retour</h1>
+        </div>
+        </a>
+    <div id="corps">
+        <table>
+            <% infoaeroport.forEach(function(row){ %>
+            <tr>
+                <td><%= row.idaeroport %></td>
+                <td> </td>
+                <td><%= row.nom %></td>
+                <td> </td>
+                <td><%= row.pays %></td>
+                <td> </td>
+                <td><%= row.ville %></td>
+            </tr>
+            <% }) %>
+        </table><br><br><br>
+        <table>
+            <tr>
+                <td>Nom du produit</td>
+                <td>Quantité</td>
+            </tr>
+            <% lsproduit.forEach(function(row){ %>
+            <tr>
+                <td><%= row.nom %></td>
+                <td><%= row.qte %></td>
+            </tr>
+            <% }) %>
+        </table>
+    </div>
+    <div id="corps">
+        <table>
+            <tr>
+                <td>Nom du produit</td>
+                <td>Quantité a ajouter</td>
+            </tr>
+            <% produits.forEach(function(row){ %>
+            <tr>
+                <td><%= row.nom %></td>
+                <form method="post" action="/ajouterqte">
+                <td><input name="nombre" type="number" id="nombre"/></td>
+                <% infoaeroport.forEach(function(row){ %>
+                <input type="hidden"  name="idaeroport"  value="<%= row.idaeroport %>">
+                <% }) %>
+                <input type="hidden"  name="idduproduit"  value="<%= row.idproduits %>">
+                <td><input type="submit" name="actions" value="Ajouter"/></td>
+                <td><input type="submit" name="actions" value="Insert"/></td>
+                </form>
+            </tr>
+            <% }) %>
+        </table>
+    </div>
+</body>
+</html>

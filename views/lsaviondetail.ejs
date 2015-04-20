@@ -1,0 +1,59 @@
+<html>
+<head>
+    <link href="index.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Connexion</title>
+</head>
+<body>
+            <a href="/admin">
+        <div class="gomenu">
+        <h1>Menu</h1>
+        </div>
+        </a>
+    <div id="corps">
+        <table>
+            <tr>
+                <td>ID de l'avion</td>
+                <td>     </td>
+                <td>Type de l'avion</td>
+                <td>     </td>
+                <td>Immatriculation</td>
+                <td>     </td>
+                <td>Nom de l'aeroport</td>
+            </tr>
+            <% msg.forEach(function(row){ %>
+            <tr>
+                <td><%= row.id %></td>
+                <td>     </td>
+                <td><%= row.type %></td>
+                <td>     </td>
+                <td><%= row.immatriculation %></td>
+                <td>     </td>
+                <td><%= row.nom %></td>
+                <td>     </td>
+                <td>
+                    <form method="post" action="/aviondetail">
+                    <input type="hidden"  name="avion"  value="<%= row.id %>">
+                    <input type="submit" value="Voir" />
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
+        </table>
+    </div>
+        <div id="corps">
+                    <table>
+            <tr>
+                <td align=center>Nom du produit</td>
+                <td align=center>Quantité</td>
+            </tr>
+            <% lsproduit.forEach(function(row){ %>
+            <tr>
+                <td align=center><%= row.nom %></td>
+                <td align=center><%= row.qte %></td>
+            </tr>
+            <% }) %>
+        </table>
+        </div>
+</body>
+</html>

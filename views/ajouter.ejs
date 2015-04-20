@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="index.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Connexion</title>
+</head>
+<body>
+        <a href="/admin">
+        <div class="gomenu">
+        <h1>Menu</h1>
+        </div>
+        </a>
+<div id="corps">
+    <form method="post" action="/ajouterproduit">
+        <legend>Ajouter un Produit</legend>
+        <table>
+            <tr>
+                <td>Nom</td>
+                <td>Prix</td>
+            </tr>
+            <tr>
+                <td><input name="nomproduit" type="text" id="nomproduit"/></td>
+                <td><input name="prixproduit" type="number" id="prixproduit"/></td>
+            </tr>
+        </table>
+            <input type="submit" value="Ajouter" />
+    </form>
+</div>
+<div id="corps">
+    <form method="post" action="/ajouteravion">
+        <legend>Ajouter un avion</legend>
+        <table>
+            <tr>
+                <td>ID de l'aeroport</td>
+                <td>Type de l'avion</td>
+                <td>Immatriculation</td>
+            </tr>
+            <tr>
+                <td><input name="idaeroport" type="number" id="idaeroport"/></td>
+                <td><input name="typeavion" type="text" id="typeavion"/></td>
+                <td><input name="immatriculation" type="text" id="immatriculation"/></td>
+            </tr>
+        </table>
+        <input type="submit" value="Ajouter" />
+    </form>
+</div>
+<div id="corps">
+    <form method="post" action="/ajouteraeroport">
+        <legend>Ajouter un aeroport</legend>
+        <table>
+            <tr>
+                <td>Nom de l'aeroport</td>
+                <td>Pays</td>
+                <td>Ville</td>
+            </tr>
+            <tr>
+                <td><input name="nom" type="text" id="nom"/></td>
+                <td><input name="pays" type="text" id="pays"/></td>
+                <td><input name="ville" type="text" id="ville"/></td>
+            </tr>
+        </table>
+        <input type="submit" value="Ajouter" />
+    </form>
+</div>
+</body>
+</html>

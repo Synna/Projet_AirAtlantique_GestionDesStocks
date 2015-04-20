@@ -1,0 +1,77 @@
+<html>
+<head>
+    <link href="index.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Connexion</title>
+</head>
+<body>
+            <a href="/admin">
+        <div class="gomenu">
+        <h1>Menu</h1>
+        </div>
+        </a>
+    <div id="corps">
+        <table>
+            <tr>
+                <td>ID de l'aeroport</td>
+                <td> </td>
+                <td>Nom de l'aeroport</td>
+                <td> </td>
+                <td>Pays</td>
+                <td> </td>
+                <td>Ville</td>
+            </tr>
+            <% msg.forEach(function(row){ %>
+            <tr>
+                <td><%= row.idaeroport %></td>
+                <td> </td>
+                <td><%= row.nom %></td>
+                <td> </td>
+                <td><%= row.pays %></td>
+                <td> </td>
+                <td><%= row.ville %></td>
+                <td>
+                    <form method="post" action="/aeroportsdetail">
+                    <input type="hidden"  name="aeroport"  value="<%= row.idaeroport %>">
+                    <input type="submit" value="Voir" />
+                    </form>
+                </td>
+                <td>
+                    <form method="post" action="/aeroportsgere">
+                    <input type="hidden"  name="aeroport"  value="<%= row.idaeroport %>">
+                    <input type="submit" value="Gere" />
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
+        </table>
+    </div>
+        <div id="corps">
+        <table>
+            <% infoaeroport.forEach(function(row){ %>
+            <tr>
+                <td><%= row.idaeroport %></td>
+                <td> </td>
+                <td><%= row.nom %></td>
+                <td> </td>
+                <td><%= row.pays %></td>
+                <td> </td>
+                <td><%= row.ville %></td>
+            </tr>
+            <% }) %>
+        </table><br><br><br>
+        <table>
+            <tr>
+                <td>Nom du produit</td>
+                <td>Quantité</td>
+            </tr>
+            <% lsproduit.forEach(function(row){ %>
+            <tr>
+                <td><%= row.nom %></td>
+                <td><%= row.qte %></td>
+            </tr>
+            <% }) %>
+        </table>
+        </div>
+</body>
+</html>
