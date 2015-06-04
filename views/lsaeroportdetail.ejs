@@ -11,6 +11,7 @@
         </div>
         </a>
     <div id="corps">
+                <h1> Liste des aeroport </h1><br><br>
         <table>
             <tr>
                 <td>ID de l'aeroport</td>
@@ -47,19 +48,9 @@
         </table>
     </div>
         <div id="corps">
-        <table>
             <% infoaeroport.forEach(function(row){ %>
-            <tr>
-                <td><%= row.idaeroport %></td>
-                <td> </td>
-                <td><%= row.nom %></td>
-                <td> </td>
-                <td><%= row.pays %></td>
-                <td> </td>
-                <td><%= row.ville %></td>
-            </tr>
+                <h1> Detail de l'<%= row.nom %> à <%= row.ville %> (<%= row.pays %>) </h1><br><br>
             <% }) %>
-        </table><br><br><br>
         <table>
             <tr>
                 <td>Nom du produit</td>
@@ -73,5 +64,10 @@
             <% }) %>
         </table>
         </div>
+                <footer>
+            <hr />
+            Copyright © 2015 - Massive Technologies - Tous droits réservés.
+            <hr />
+        </footer>
 </body>
 </html>

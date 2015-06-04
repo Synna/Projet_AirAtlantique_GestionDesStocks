@@ -5,25 +5,17 @@
     <title>Connexion</title>
 </head>
 <body>
-            <a href="javascript:history.back()">
+        <a href="javascript:history.back()">
         <div class="gomenu">
         <h1>Retour</h1>
         </div>
         </a>
     <div id="corps">
         <table>
-            <% infoaeroport.forEach(function(row){ %>
-            <tr>
-                <td><%= row.idaeroport %></td>
-                <td> </td>
-                <td><%= row.nom %></td>
-                <td> </td>
-                <td><%= row.pays %></td>
-                <td> </td>
-                <td><%= row.ville %></td>
-            </tr>
-            <% }) %>
-        </table><br><br><br>
+            <% infoavion.forEach(function(row){ %>
+            <h1> Detail de l'avion <%= row.immatriculation %> de type <%= row.type %> actuelement a l'<%= row.nom %></h1>
+           <% }) %>
+        </table><br>
         <table>
             <tr>
                 <td>Nom du produit</td>
@@ -46,9 +38,10 @@
             <% produits.forEach(function(row){ %>
             <tr>
                 <td><%= row.nom %></td>
-                <form method="post" action="/ajouterqte">
+                <form method="post" action="/ajouterqteav">
                 <td><input name="nombre" type="number" id="nombre"/></td>
-                <% infoaeroport.forEach(function(row){ %>
+                <% infoavion.forEach(function(row){ %>
+                <input type="hidden"  name="idavion"  value="<%= row.id %>">
                 <input type="hidden"  name="idaeroport"  value="<%= row.idaeroport %>">
                 <% }) %>
                 <input type="hidden"  name="idduproduit"  value="<%= row.idproduits %>">

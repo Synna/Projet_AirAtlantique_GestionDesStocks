@@ -127,14 +127,17 @@ app.post('/ajouterqte', function(req, res) {
   var nombre = req.body.nombre;
   var idduproduit = req.body.idduproduit;
   var idaeroport = req.body.idaeroport;
-  var actions = req.body.actions
-  if (actions == "Ajouter") {
   reqmysql.ajoutqte(nombre, idduproduit, idaeroport, function callback (result){});
-  };
-  if (actions == "Insert") {
-  reqmysql.insertqte(nombre, idduproduit, idaeroport, function callback (result){});
-  };
 res.redirect('/aeroports');
+});
+
+app.post('/ajouterqteav', function(req, res) {
+  var nombre = req.body.nombre;
+  var idduproduit = req.body.idduproduit;
+  var idavion = req.body.idavion;
+  var idaeroport = req.body.idaeroport;
+  reqmysql.ajoutqteav(nombre, idduproduit, idavion, idaeroport, function callback (result){});
+res.redirect('/lsavions');
 });
 
 app.get('/lsavions', function(req, res) {
@@ -151,6 +154,20 @@ lsavions = result;
 reqmysql.lsproduit(avion, function callback (result2){
 lsproduit = result2;
 res.render('lsaviondetail.ejs', {msg: lsavions, lsproduit: lsproduit});
+});
+});
+});
+
+app.post('/aviongere', function(req, res) {
+var avionid = req.body.avion;
+reqmysql.lsproduitav(avionid, function callback (result1){
+lsproduit = result1;
+reqmysql.infoavion(avionid, function callback (result2){
+var infoavion = result2;
+reqmysql.produits(function callback (result3){
+var produits = result3;
+res.render('lsaviongere.ejs', {lsproduit: lsproduit, infoavion: infoavion, produits: produits});
+});
 });
 });
 });

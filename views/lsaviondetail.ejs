@@ -11,6 +11,7 @@
         </div>
         </a>
     <div id="corps">
+        <h1> Liste des avion </h1><br><br>
         <table>
             <tr>
                 <td>ID de l'avion</td>
@@ -37,12 +38,19 @@
                     <input type="submit" value="Voir" />
                     </form>
                 </td>
+                <td>
+                    <form method="post" action="/aviongere">
+                    <input type="hidden"  name="avion"  value="<%= row.id %>">
+                    <input type="submit" value="Gere" />
+                    </form>
+                </td>
             </tr>
             <% }) %>
         </table>
     </div>
         <div id="corps">
-                    <table>
+                <h1> Detail de l'avion </h1><br>
+        <table>
             <tr>
                 <td align=center>Nom du produit</td>
                 <td align=center>Quantité</td>
@@ -55,5 +63,10 @@
             <% }) %>
         </table>
         </div>
+        <footer>
+            <hr />
+            Copyright © 2015 - Massive Technologies - Tous droits réservés.
+            <hr />
+        </footer>
 </body>
 </html>

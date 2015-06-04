@@ -4,11 +4,11 @@
     margin:0px;
     font-family:Arial, Helvetica, sans-serif;
     background-color: rgb(224, 224, 224);
+    padding: 0; 
 }
-td
-{
- text-align: center;
-}
+table {
+margin : 10px auto auto auto;
+} 
 #champ
 {
     border:1px solid black;

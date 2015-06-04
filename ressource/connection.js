@@ -48,6 +48,14 @@ var lsproduitae = function (aeroport, callback){
 };
 exports.lsproduitae = lsproduitae;
 
+var lsproduitav = function (avionid, callback){
+  var queryString = 'SELECT qte.qte, produits.nom from qte, produits WHERE qte.idproduits = produits.idproduits AND qte.idavion = "'+ avionid + '"';
+  connection.query(queryString, function(err, rows, fields) {
+    callback(rows);
+});
+};
+exports.lsproduitav = lsproduitav;
+
 var lsaeroports = function (callback){
   var queryString = 'SELECT idaeroport, nom, pays, ville from aeroport';
   connection.query(queryString, function(err, rows, fields) {
@@ -63,6 +71,14 @@ var infoaeroport = function (aeroport, callback){
 });
 };
 exports.infoaeroport = infoaeroport;
+
+var infoavion = function (avionid, callback){
+  var queryString = 'SELECT id, avion.idaeroport, type, immatriculation, nom from avion, aeroport WHERE avion.idaeroport = aeroport.idaeroport AND avion.id = "'+ avionid + '" ';
+  connection.query(queryString, function(err, rows, fields) {
+    callback(rows);
+});
+};
+exports.infoavion = infoavion;
 
 var afficheruser = function (callback){
   var queryString = 'SELECT id, login from user';
@@ -87,14 +103,6 @@ var ajoutuser = function (loginajouter, passwordajouter, access, callback){
 };
 exports.ajoutuser = ajoutuser;
 
-
-
-var insertqte = function (nombre, idduproduit, idaeroport, callback){
-    var queryString = 'INSERT INTO qteaeroport (idaeroport, idproduits, qte) VALUES ("'+ idaeroport + '", "'+ idduproduit + '", "'+ nombre + '");';
-    connection.query(queryString, function(err, fields) {});
-};
-exports.insertqte = insertqte;
-
 var ajouterproduit = function (nomproduit, prixproduit, callback){
     var queryString = 'INSERT INTO produits (nom, prix) VALUES ("'+ nomproduit + '", "'+ prixproduit + '");';
     connection.query(queryString, function(err, fields) {});
@@ -114,14 +122,60 @@ var ajouteraeroport = function (nom, pays, ville, callback){
 exports.ajouteraeroport = ajouteraeroport;
 
 var ajoutqte = function (nombre, idduproduit, idaeroport, callback){
-  var queryString = 'SELECT qte from qteaeroport WHERE idaeroport = "'+ idaeroport + '" AND idproduits = "'+ idduproduit + '"';
+      var queryString = 'SELECT COUNT(*) AS namesCount FROM qteaeroport WHERE idaeroport = "'+ idaeroport + '" AND idproduits = "'+ idduproduit + '"';
   connection.query(queryString, function(err, rows, fields) {
+    if (rows[0].namesCount == 1) {
+    var queryString = 'SELECT qte from qteaeroport WHERE idaeroport = "'+ idaeroport + '" AND idproduits = "'+ idduproduit + '"';
+    connection.query(queryString, function(err, rows, fields) {
     var temp = parseFloat(rows[0].qte) + parseFloat(nombre);
     var queryString = 'UPDATE qteaeroport SET qte = "'+ temp + '" WHERE idaeroport = "'+ idaeroport + '" AND idproduits = "'+ idduproduit + '";';
     connection.query(queryString, function(err, fields) {});
+    });
+    };
+    if (rows[0].namesCount == 0) {
+    var queryString = 'INSERT INTO qteaeroport (idaeroport, idproduits, qte) VALUES ("'+ idaeroport + '", "'+ idduproduit + '", "'+ nombre + '");';
+    connection.query(queryString, function(err, fields) {});
+    };
   });
 };
 exports.ajoutqte = ajoutqte;
+
+var ajoutqteav = function (nombre, idduproduit, idavion, idaeroport, callback){
+    var queryString = 'SELECT COUNT(*) AS namesCount FROM qteaeroport WHERE idaeroport = "'+ idaeroport + '" AND idproduits = "'+ idduproduit + '"';
+  connection.query(queryString, function(err, rows, fields) {
+    if (rows[0].namesCount == 1) {
+    var queryString = 'SELECT qte from qteaeroport WHERE idaeroport = "'+ idaeroport + '" AND idproduits = "'+ idduproduit + '"';
+    connection.query(queryString, function(err, rows, fields) {
+    var temp = parseFloat(rows[0].qte) - parseFloat(nombre);
+    var queryString = 'UPDATE qteaeroport SET qte = "'+ temp + '" WHERE idaeroport = "'+ idaeroport + '" AND idproduits = "'+ idduproduit + '";';
+    connection.query(queryString, function(err, fields) {});
+    });
+    };
+    if (rows[0].namesCount == 0) {
+    var temp2 = 0 - parseFloat(nombre);
+    var queryString = 'INSERT INTO qteaeroport (idaeroport, idproduits, qte) VALUES ("'+ idaeroport + '", "'+ idduproduit + '", "'+ temp2 + '");';
+    connection.query(queryString, function(err, fields) {});
+    };
+  });
+  var queryString = 'SELECT COUNT(*) AS namesCountt FROM qte WHERE idavion = "'+ idavion + '" AND idproduits = "'+ idduproduit + '"';
+  connection.query(queryString, function(err, rows, fields) {
+    if (rows[0].namesCountt == 1) {
+    var queryString = 'SELECT qte from qte WHERE idavion = "'+ idavion + '" AND idproduits = "'+ idduproduit + '"';
+    connection.query(queryString, function(err, rows, fields) {
+    var temp3 = parseFloat(rows[0].qte) + parseFloat(nombre);
+    var queryString = 'UPDATE qte SET qte = "'+ temp3 + '" WHERE idavion = "'+ idavion + '" AND idproduits = "'+ idduproduit + '";';
+    connection.query(queryString, function(err, fields) {
+    });
+    });
+    };
+    if (rows[0].namesCountt == 0) {
+    var temp2 = 0 + parseFloat(nombre);
+    var queryString = 'INSERT INTO qte (idavion, idproduits, qte) VALUES ("'+ idavion + '", "'+ idduproduit + '", "'+ temp2 + '");';
+    connection.query(queryString, function(err, fields) {});
+    };
+});
+};
+exports.ajoutqteav = ajoutqteav;
 
 var deletuser = function (useradelet, callback){
   var queryString = 'DELETE FROM user WHERE id='+ useradelet + '';
