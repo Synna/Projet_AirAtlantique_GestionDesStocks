@@ -35,6 +35,7 @@ exports.produits = produits;
 var lsavions = function (callback){
   var queryString = 'SELECT id, avion.idaeroport, type, immatriculation, nom from avion, aeroport WHERE avion.idaeroport = aeroport.idaeroport ';
   connection.query(queryString, function(err, rows, fields) {
+        console.log(rows);
     callback(rows);
 });
 };

@@ -6,11 +6,9 @@
     <title>Connexion</title>
 </head>
 <body>
-    <div id="champ">
     <form method="post" action="/connexion">
                 <legend>Connexion</legend>
                 <%= msg %>
-                <div id="conex">
                 <table>
                     <tr>
                         <td>Identifiant :</td>
@@ -20,14 +18,12 @@
                         <td>Mot de Passe :</td>
                         <td><input type="password" name="password" id="password" /></td>
                     </tr><br>
-                </table>
-                </div><br>
+                </table><br>
             <input type="submit" value="connexion" />
-    </form>
-</div>
+    </form><br><br><br><br><br><br><br><br>
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
-                <footer>
+        <footer>
             <hr />
             Copyright © 2015 - Massive Technologies - Tous droits réservés.
             <hr />

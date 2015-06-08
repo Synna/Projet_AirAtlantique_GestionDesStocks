@@ -1,0 +1,99 @@
+#!/bin/bash
+
+# Source function library.
+. /lib/lsb/init-functions
+
+#############PARAMETRES A CONFIGURER################
+
+NAME=serveur.js                 # Nom de votre application
+PORT=1234                   # Port (dans le cas ou votre app utilise process.env.PORT pour définir le port)
+INSTANCE_DIR=C:/Users/Asus NB/Desktop/Projet_AirAtlantique_GestionDesStocks$NAME         # emplacement de votre application
+SOURCE_NAME=MonAppNode       # Nom donné au process
+
+user=www-data
+pidfile=/var/run/$SOURCE_NAME.pid
+logfile=/var/log/$SOURCE_NAME.log
+forever_dir=/node_modules/forever/bin/forever # chemin d'execution de forever.
+
+###################FIN#########################
+
+export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/game
+
+node=node
+forever=forever
+awk=awk
+
+start() {
+    echo "Starting $NAME node instance: "
+
+    if [ "$id" = "" ]; then
+        # Create the log and pid files, making sure that the target use has access to them
+        touch $logfile
+        chown $user $logfile
+
+        touch $pidfile
+        chown $user $pidfile
+
+        # Launch the application
+        start_daemon
+            $forever start -p $forever_dir --pidFile $pidfile -l $logfile -a -d $INSTANCE_DIR $SOURCE_NAME
+        RETVAL=$?
+    else
+        echo "Instance already running at pid $id"
+        RETVAL=0
+    fi
+}
+
+restart() {
+    echo -n "Restarting $NAME node instance : "
+    if [ "$id" != "" ]; then
+        $forever restart -p $forever_dir $id
+        RETVAL=$?
+    else
+        start
+    fi
+}
+
+stop() {
+    echo -n "Shutting down $NAME node instance PID : `cat $pidfile` "
+    if [ "$id" != "" ]; then
+        $forever stop -p $forever_dir $id
+    else
+        echo "Instance is not running";
+    fi
+    RETVAL=$?
+}
+
+status(){
+    pid=`cat $pidfile`
+    $forever list -p $forever_dir | $awk "\$8 && \$8 == \"$pid\" { print \$0; };"
+    #forever list -p /var/run/forever | awk '$8 && $8 == "27567" { print $0; };'
+}
+
+getForeverId() {
+    pid=`cat $pidfile` 
+    $forever list -p $forever_dir | $awk "\$8 && \$8 == \"$pid\" { gsub(/[\[\]]/, \"\", \$2); print \$2; };"
+    #forever list -p /var/run/forever | awk '$7 == "27270" { gsub(/[\[\]]/, "", $2); print $2; };'
+}
+id=$(getForeverId);
+
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status 
+        ;;
+    restart)
+        restart
+        ;;
+    *)
+        echo "Usage:  {start|stop|status|restart}"
+        exit 1
+        ;;
+esac
+exit $RETVAL

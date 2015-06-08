@@ -9,22 +9,6 @@
 table {
 margin : 10px auto auto auto;
 } 
-#champ
-{
-    border:1px solid black;
-    box-shadow:2px 2px 10px black;
-    height: 170px;
-    width: 400px;
-    display:inline-block;
-    background-color:rgb(255,136,17);
-    color:rgb(245,245,245);
-    margin:auto;
-    margin-top: 150px;
-}
-#conex
-{
-    padding-left: 15%;
-}
 #corps
 {
     border:1px solid black;
